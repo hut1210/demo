@@ -26,36 +26,34 @@ public class LockTestController {
         String key = "redisson_key";
         for (int i = 0; i < 100; i++) {
             int finalI = i;
-            if (!EXEC.isShutdown()) {
-                EXEC.execute(() -> {
-                    try {
-                        System.err.println("=============线程开启============" + Thread.currentThread().getName() + " " + finalI);
+            EXEC.execute(() -> {
+                try {
+                    System.err.println("=============线程开启============" + Thread.currentThread().getName() + " " + finalI);
 
-                        /** distributedLocker.lock(key,10L); //直接加锁，获取不到锁则一直等待获取锁
-                         * Thread.sleep(100); //获得锁之后可以进行相应的处理
-                         * System.err.println("======获得锁后进行相应的操作======"+Thread.
-                         * currentThread().getName());
-                         * distributedLocker.unlock(key); //解锁
-                         * System.err.println("============================="+
-                         * Thread.currentThread().getName());*/
+                    /** distributedLocker.lock(key,10L); //直接加锁，获取不到锁则一直等待获取锁
+                     * Thread.sleep(100); //获得锁之后可以进行相应的处理
+                     * System.err.println("======获得锁后进行相应的操作======"+Thread.
+                     * currentThread().getName());
+                     * distributedLocker.unlock(key); //解锁
+                     * System.err.println("============================="+
+                     * Thread.currentThread().getName());*/
 
-                        boolean isGetLock = distributedLocker.tryLock(key, TimeUnit.SECONDS, 5L, 10L); // 尝试获取锁，等待5秒，自己获得锁后一直不解锁则10秒后自动解锁
-                        if (isGetLock) {
-                            System.out.println("线程:" + Thread.currentThread().getName() + ",获取到了锁");
-                            Thread.sleep(100); // 获得锁之后可以进行相应的处理
-                            System.err.println("======获得锁后进行相应的操作======" + Thread.currentThread().getName());
-                            distributedLocker.unlock(key);
-                            System.err.println("===============解锁==============" + Thread.currentThread().getName());
-                        }
+                    boolean isGetLock = distributedLocker.tryLock(key, TimeUnit.SECONDS, 5L, 10L); // 尝试获取锁，等待5秒，自己获得锁后一直不解锁则10秒后自动解锁
+                    if (isGetLock) {
+                        System.out.println("线程:" + Thread.currentThread().getName() + ",获取到了锁");
+                        Thread.sleep(100); // 获得锁之后可以进行相应的处理
+                        System.err.println("======获得锁后进行相应的操作======" + Thread.currentThread().getName());
+                        distributedLocker.unlock(key);
+                        System.err.println("===============解锁==============" + Thread.currentThread().getName());
+                    }
                     /*System.out.println("线程池中线程数目：" + EXEC.getPoolSize() + "，队列中等待执行的任务数目：" +
                             EXEC.getQueue().size() + "，已执行玩别的任务数目：" + EXEC.getCompletedTaskCount());*/
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
-        EXEC.shutdown();
+        //EXEC.shutdown();
         /*for (int i = 0; i < 100; i++) {
             Thread t = new Thread(new Runnable() {
                 @Override
@@ -64,12 +62,12 @@ public class LockTestController {
                         System.err.println("=============线程开启============" + Thread.currentThread().getName());
 
                         *//**distributedLocker.lock(key, 10L); //直接加锁，获取不到锁则一直等待获取锁
-         *Thread.sleep(100); //获得锁之后可以进行相应的处理
-         *System.err.println("======获得锁后进行相应的操作======" + Thread.
-         * currentThread().getName());
-         *distributedLocker.unlock(key); //解锁
-         *System.err.println("=============================" +
-         * Thread.currentThread().getName());*//*
+                         *Thread.sleep(100); //获得锁之后可以进行相应的处理
+                         *System.err.println("======获得锁后进行相应的操作======" + Thread.
+                         * currentThread().getName());
+                         *distributedLocker.unlock(key); //解锁
+                         *System.err.println("=============================" +
+                         * Thread.currentThread().getName());*//*
 
                         boolean isGetLock = distributedLocker.tryLock(key, TimeUnit.SECONDS, 5L, 10L); // 尝试获取锁，等待5秒，自己获得锁后一直不解锁则10秒后自动解锁
                         if (isGetLock) {
