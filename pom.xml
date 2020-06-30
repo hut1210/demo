@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
@@ -73,6 +74,24 @@
                     <mainClass>com.example.demo.DemoApplication</mainClass>
                 </configuration>
             </plugin>
+            <!-- docker 插件 begin -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <imageName>${project.artifactId}</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+​                        <resource>
+​                            <targetPath>/</targetPath>
+​                            <directory>${project.build.directory}</directory>
+​                            <include>${project.build.finalName}.jar</include>
+​                        </resource>
+​                  </resources>
+                </configuration>
+            </plugin>
+            <!-- docker 插件 end -->
         </plugins>
     </build>
 

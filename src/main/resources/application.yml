@@ -1,7 +1,7 @@
 
 spring:
   redis:
-    host: localhost
+    host: 192.168.1.108
     port: 6379
     database: 0
     password:
@@ -16,6 +16,6 @@ spring:
         #连接池中的最小空闲连接 默认 0
         min-idle: 8
 redisson:
-  address: redis://127.0.0.1:6379
+  address: redis://192.168.1.108:6379
 server:
-  port: 8081
+  port: 8082

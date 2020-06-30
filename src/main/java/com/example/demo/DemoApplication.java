@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class DemoApplication /*extends SpringBootServletInitializer */{
+public class DemoApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
@@ -20,9 +20,9 @@ public class DemoApplication /*extends SpringBootServletInitializer */{
         return "Hello World!";
     }
 
-    /*@Override//为了打包springboot项目
+    @Override//为了打包springboot项目
     protected SpringApplicationBuilder configure(
             SpringApplicationBuilder builder) {
         return builder.sources(this.getClass());
-    }*/
+    }
 }
